@@ -88,7 +88,7 @@ def hello_world():
     print(request) #Para ver la llamada!
     return "<p>Hola!</p>" #Esto es html!
 
-@app.post("/") # cambiamos route por get!
+@app.post("/") # cambiamos route por post!
 def post_root():
     print(request) #Para ver la llamada!
     return  #Aun no hace nada!
@@ -97,3 +97,47 @@ if __name__ == '__main__':
     app.run(port=8001) 
 ````
  De paso le agregamos un print para ver la llamada que nos devuelve al nosotros acceder a el. 
+
+---
+
+## Como se comunican entre ellos los servidores?
+
+Bien, ya sabemos hacer un servidor http simple, ahora, como se conectan los servidores entre ellos? como recibo yo, al entrar a facebook, una pagina, con una lista de post, o en twitter una pagina con tweets? En los servidores se encuentran varios *Endpoints* para estas tareas, podriamos tener un endpoint que se llame ```/users``` que cuando se le hace una llamada ```GET``` nos devuelva una lista de usuarios, o que, cuando le mandemos una llamada ```POST``` nos guarde en una base de datos el nuevo usuario que le enviamos, o que un ```PUT``` nos modifique un usuario con los datos que le decimos. pero, estas listas o datos, como llegan a nuestros servidores? existen muchisimos protocolos para esto, y aprender los mas basicos podria tomarnos varias clases, pero hay uno que es el standar por defecto, la gran mayoria de estas comunicaciones se hace por el protocolo REST, que es el que usa archivos JSON para comunicarse.
+```json
+    {
+        "ejemplo":"json",
+    }
+```
+Este sistema funciona con un par clave valor, exactamente igual a los diccionarios de Python. la diferencia a javascript es que las claves SIEMPRE son strings, ya que lo que enviamos en un rest, es una pieza de texto. 
+```json
+    {
+        "nombre":"Matilda",
+        "caballos":[
+            "Pedro",
+            "Jose",
+            "Martin"
+        ],
+        "cancionesFavoritas":[
+            {
+                "nombre": "Psycho",
+                "artista": "Red Velvet"
+            },
+            {
+                "nombre": "Los Dinosaurios",
+                "artista": "Charly Garcia"
+            }
+        ]
+    }
+```
+Ahora, como se llama una programa o funcion que permite conectar dos computadoras o procesos? es lo que conocemos como API.
+
+---
+### Api
+
+Vamos a ver algunos ejemplos de APIs para entender bien como funciona el concepto.
+
+1. Tenemos una PC corriendo un servidor de un juego, a este se conectan varios clientes, para mandar la informacion del juego a los demas clientes, existe una API que permite acceder a todos esos datos.
+2. Tenemos un videojuego que esta siendo desarrollado para una consola, el motor de videojuegos cuenta con una API que permite controlar espectos de la consola como la pantalla, el volumen, los controles, ya que todo eso funciona dentro de la consola, no en el programa en si. 
+3. Tenemos un servidor que da una pagina web, esa pagina necesita acceder a una lista de tareas guardadas en una base de datos, en el servidor, existe un endpoint que recibe una peticion de notas, y las envia por medio de una API REST.
+
+Podriamos entonces decir que una API es cualquier programa o proceso que permite conectar a dos procesos independientes por medio de un acuerdo en como se envian y reciben los datos, este "acuerdo de como se hacen las cosas", es lo que conocemos como protocolo. un conjunto de reglas para una tarea.
